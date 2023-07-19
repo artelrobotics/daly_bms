@@ -5,7 +5,7 @@ from rcomponent.rcomponent import RComponent
 from robotnik_msgs.msg import BatteryStatus
 
 from dalybms import DalyBMS as DalyBMSDriver
-
+import time
 class RepeatTimer(threading.Timer):
     def run(self):
         while not self.finished.wait(self.interval):
@@ -50,16 +50,17 @@ class DalyBMS(RComponent):
         RComponent.ros_shutdown(self)
 
     def read(self):
+        time.sleep(1)
         try:
           soc_data = self._driver.get_soc()
           mosfet_data = self._driver.get_mosfet_status()
           cells_data = self._driver.get_cell_voltages()
         except:
-          rospy.logwarn("Skipping current read cycle: Driver failed to return data")
+          #rospy.logwarn("Skipping current read cycle: Driver failed to return data")
           return
 
         if soc_data == False or mosfet_data == False or cells_data == False:
-          rospy.logwarn("Skipping current read cycle: Driver failed to return data")
+          #rospy.logwarn("Skipping current read cycle: Driver failed to return data")
           return
 
         self._battery_status.level = soc_data['soc_percent']
@@ -96,4 +97,5 @@ class DalyBMS(RComponent):
 
 
     def ros_publish(self):
+        time.sleep(0.1)
         self._battery_status_pub.publish(self._battery_status)

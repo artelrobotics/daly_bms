@@ -205,11 +205,11 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-catkin_install_python(PROGRAMS
-  src/daly_bms/__init__.py
-  src/daly_bms/daly_bms.py
-  src/daly_bms/daly_bms_node.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+#catkin_install_python(PROGRAMS
+#  src/__init__.py
+#  src/daly_bms.py
+#  src/daly_bms_node.py
+#  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 
 install(
